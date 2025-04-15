@@ -57,3 +57,22 @@ plt.xlabel("Gene Clusters")
 plt.ylabel("Strains")
 plt.show()
 ```
+
+Get protein sequences from prokka fasta file
+```
+from Bio import SeqIO
+
+# Load Tajik strain Prokka proteins
+faa_file = "prokka_outputs_helvet/Lactobacillus_helveticus_TJA10/Lactobacillus_helveticus_TJA10.faa"
+tajik_gene_ids = ["PROKKA_00001", "PROKKA_00034", ...]  # fill from Roary
+
+records = SeqIO.parse(faa_file, "fasta")
+filtered = [r for r in records if any(gid in r.id for gid in tajik_gene_ids)]
+
+# Save for EggNOG
+SeqIO.write(filtered, "tajik_specific_proteins.faa", "fasta")
+
+```
+
+
+
